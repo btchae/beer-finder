@@ -31,3 +31,4 @@ app.listen(port);
 console.log('=============================');
 console.log('Our band name is PORT:' + port);
 console.log('=============================');
+// console.log(process.env.BEER_KEY); <===Important to hide keys)
