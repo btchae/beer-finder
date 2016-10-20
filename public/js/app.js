@@ -6,14 +6,15 @@ var KingComponent = React.createClass ({
     return {
       latitude: '',
       longitude: '',
-      currentBeer: ''
+      currentBeer: '',
+      currentBrewery: ''
     };
   },
   getUserLocation: function(e) {
     e.preventDefault();
-    console.log(e);
-    console.log(e.target);
-    console.log(e.target.value);
+    // console.log(e);
+    // console.log(e.target);
+    // console.log(e.target.value);
     console.log('testing function');
     console.log(this.state);
     var that = this;
@@ -27,9 +28,10 @@ var KingComponent = React.createClass ({
         // console.log(latitude.toString());
         // console.log(longitude.toString());
         console.log(that);
-        that.state.latitude = latitude.toString();
-        that.state.longitude = longitude.toString();
-        console.log(that.state.latitude);
+        that.setCoordinates(latitude, longitude);
+        // that.state.latitude = latitude.toString();
+        // that.state.longitude = longitude.toString();
+        // console.log(that.state.latitude);
       };
       function error() {
         alert("Unable to retrieve your location");
@@ -39,23 +41,24 @@ var KingComponent = React.createClass ({
     // });
     navigator.geolocation.getCurrentPosition(success, error);
   },
-  beerSearch: function(beer) {
-    console.log("this is the beer I'm looking for: "+ beer);
-    this.getUserLocation();
-    // $.ajax({
-    //   url: + beer,
-    //   type: "GET",
-    //   success: 
-    // })
+  setCoordinates: function(latitude,longitude) {
+    console.log('testing setCoordinates');
+    this.setState({
+      latitude: latitude,
+      longitude: longitude
+    });
+    $.ajax({
+      url: 'beers/search/'+ this.state.latitude + '/' + this.state.longitude,
+      type: "GET",
+      success: function(data) {
+        console.log(data);
+      }
+    })
   },
   render: function() {
     console.log('rendering KingComponent');
     return (
-      <form onSubmit={this.getUserLocation}>
-      <label for="searchbar">Search: </label>
-      <input type="text" id="searchbar" placeholder="Search Beer"></input>
-      <input type="submit" placeholder="Submit"></input>
-      </form>
+      <button onClick={this.getUserLocation}>Your Location</button>
     )
   }
 });

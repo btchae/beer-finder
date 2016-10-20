@@ -12,16 +12,27 @@ router.get('/:beer', function(req, res) {
   request('http://api.brewerydb.com/v2/search?q='+ req.params.beer + '&type=beer&key=' + 
     process.env.BEER_KEY + '&format=json', function(error, response, body) {
       if(!error && response.statusCode == 200) {
-        console.log('API data below...');
-        console.log(body);
+        console.log('searching beer');
+        // console.log('API data below...');
+        // console.log(body);
+        res.send(body);
       }
   });
 });
 
-router.get('/search/:longitude/:latitude', function(req, res) {
+router.get('/search/:latitude/:longitude', function(req, res) {
   console.log('testing search');
-  request('https://api.brewerydb.com/v2/search/geo/point?lat='+'35.772096'+'&lng='+
-    '-78.638614'+'&key='+process.env.BEER_KEY+'&format=json');
+  console.log(req.params);
+  request('https://api.brewerydb.com/v2/search/geo/point?lat='+ req.params.latitude +'&lng='+
+    req.params.longitude +'&key='+process.env.BEER_KEY+'&format=json', function(error, response, body) {
+      if (!error) {
+        console.log('searching coordinates');
+        console.log(body);
+        res.send(body);
+      } else {
+        console.log(error);
+      }
+    });
 });
 
 module.exports = router;
