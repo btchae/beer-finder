@@ -24,12 +24,14 @@ router.get('/:beer', function(req, res) {
 router.get('/search/:latitude/:longitude', function(req, res) {
   console.log('testing search');
   console.log(req.params);
+  console.log(process.env.BEER_KEY);
   request('https://api.brewerydb.com/v2/search/geo/point?lat='+ req.params.latitude +'&lng='+
     req.params.longitude +'&key='+process.env.BEER_KEY+'&format=json', function(error, response, body) {
       if (!error) {
         console.log('searching coordinates');
         // console.log(body);
         console.log(typeof body);
+        // console.log(body);
         res.json(JSON.parse(body));
       } else {
         console.log(error);

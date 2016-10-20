@@ -8,7 +8,9 @@ var KingComponent = React.createClass ({
       longitude: '',
       currentBeer: '',
       currentBrewery: '',
-      brewerySearch: []
+      brewerySearch: [],
+      display: '',
+      searchText: ''
     };
   },
   getUserLocation: function(e) {
@@ -63,13 +65,47 @@ var KingComponent = React.createClass ({
       }.bind(this)
     })
   },
+  handleSearch: function(e) {
+    console.log('testing handleSearch');
+    this.setState({
+      searchText: e.target.value
+    });
+  },
+  searchBeer: function(e) {
+    console.log('testing searchBeer');
+    e.preventDefault();
+    console.log(e.target);
+  },
   render: function() {
     console.log('rendering KingComponent');
     return (
-      <button onClick={this.getUserLocation}>Your Location</button>
+      <div>
+        <button onClick={this.getUserLocation}>Your Location</button>
+        <form onSubmit={this.searchBeer}>
+        <label>Search Beer: </label>
+          <input type="text" placeholder="Search beers"></input>
+          <input type="submit"></input>
+        </form>
+      </div>
     )
   }
 });
+
+// var BeerSearch = React.createClass ({
+//   getInitialState: function() {
+//   },
+//   selectBeer: function(e) {
+//     e.preventDefault();
+//   }
+// })
+
+// var BrewerySearch = React.createClass ({
+//   getInitialState: function() {
+//   },
+//   selectBrewery: function(e) {
+//     e.preventDefault();
+//   }
+// });
 
 ReactDOM.render(
   <KingComponent />, 
