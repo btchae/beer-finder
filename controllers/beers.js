@@ -17,6 +17,8 @@ router.get('/:beer', function(req, res) {
         // console.log('API data below...');
         // console.log(body);
         res.json(JSON.parse(body));
+      } else {
+        console.log(response.statusCode);
       }
   });
 });

@@ -67,7 +67,7 @@ var KingComponent = React.createClass ({
     })
   },
   handleSearch: function(e) {
-    console.log('testing handleSearch');
+    // console.log('testing handleSearch');
     this.setState({
       searchText: e.target.value
     });
@@ -82,31 +82,67 @@ var KingComponent = React.createClass ({
       type: "GET",
       success: function(data) {
         console.log(data["data"]);
-      }
+        var beerList = [];
+        for (var i = 0; i < data["data"].length; i++) {
+          beerList.push(data["data"][i]);
+        }
+        this.setState({
+          beerSearch: beerList,
+          display: "beer"
+        });
+      }.bind(this)
     })
+  },
+  selectingBeer: function(id) {
+    this.setState({
+      currentBeer: id
+    });
   },
   render: function() {
     console.log('rendering KingComponent');
-    return (
+    if (this.state.display === 'beer') {
+      return (
+        <BeerSearch
+          display={this.state.display}
+          latitude={this.state.latitude}
+          longitude={this.state.longitude}
+          currentBeer={this.state.currentBeer}
+          beerSearch={this.state.beerSearch}
+          searchText={this.state.searchText}
+          selectingBeer={this.selectingBeer}
+          />
+      )
+    } else {
+      return (
+        <div>
+          <button onClick={this.getUserLocation}>Your Location</button>
+          <form onSubmit={this.searchBeer}>
+          <label>Search Beer: </label>
+            <input type="text" placeholder="Search beers" onChange={this.handleSearch}></input>
+            <input type="submit"></input>
+          </form>
+        </div>
+    )
+  }
+  }
+});
+
+var BeerSearch = React.createClass ({
+  selectBeer: function(e) {
+    e.preventDefault();
+    console.log('selecting beer');
+    console.log(e.target.id);
+    this.props.selectingBeer(e.target.id);
+  },
+  render: function() {
+    console.log(this.props);
+    return(
       <div>
-        <button onClick={this.getUserLocation}>Your Location</button>
-        <form onSubmit={this.searchBeer}>
-        <label>Search Beer: </label>
-          <input type="text" placeholder="Search beers" onChange={this.handleSearch}></input>
-          <input type="submit"></input>
-        </form>
+        <p id={this.props.beerSearch[0].id} onClick={this.selectBeer}>{this.props.beerSearch[0].name}</p>
       </div>
     )
   }
 });
-
-// var BeerSearch = React.createClass ({
-//   getInitialState: function() {
-//   },
-//   selectBeer: function(e) {
-//     e.preventDefault();
-//   }
-// })
 
 // var BrewerySearch = React.createClass ({
 //   getInitialState: function() {
