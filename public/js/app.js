@@ -7,7 +7,8 @@ var KingComponent = React.createClass ({
       latitude: '',
       longitude: '',
       currentBeer: '',
-      currentBrewery: ''
+      currentBrewery: '',
+      brewerySearch: []
     };
   },
   getUserLocation: function(e) {
@@ -52,7 +53,14 @@ var KingComponent = React.createClass ({
       type: "GET",
       success: function(data) {
         console.log(data["data"]);
-      }
+        var breweryList = [];
+        for (var i = 0; i < data["data"].length; i++) {
+          breweryList.push(data["data"][i]);
+        }
+        this.setState({
+          brewerySearch: breweryList
+        });
+      }.bind(this)
     })
   },
   render: function() {
