@@ -13,9 +13,10 @@ router.get('/:beer', function(req, res) {
     process.env.BEER_KEY + '&format=json', function(error, response, body) {
       if(!error && response.statusCode == 200) {
         console.log('searching beer');
+        console.log(typeof body);
         // console.log('API data below...');
         // console.log(body);
-        res.send(body);
+        res.json(json.parse(body));
       }
   });
 });
@@ -27,8 +28,9 @@ router.get('/search/:latitude/:longitude', function(req, res) {
     req.params.longitude +'&key='+process.env.BEER_KEY+'&format=json', function(error, response, body) {
       if (!error) {
         console.log('searching coordinates');
-        console.log(body);
-        res.send(body);
+        // console.log(body);
+        console.log(typeof body);
+        res.json(JSON.parse(body));
       } else {
         console.log(error);
       }

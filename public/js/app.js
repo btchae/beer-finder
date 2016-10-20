@@ -51,7 +51,7 @@ var KingComponent = React.createClass ({
       url: 'beers/search/'+ this.state.latitude + '/' + this.state.longitude,
       type: "GET",
       success: function(data) {
-        console.log(data);
+        console.log(data["data"]);
       }
     })
   },
