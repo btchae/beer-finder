@@ -5,12 +5,15 @@ var KingComponent = React.createClass ({
   getInitialState: function() {
     return {
       latitude: '',
-      longitude: ''
+      longitude: '',
+      currentBeer: ''
     };
   },
   getUserLocation: function(e) {
     e.preventDefault();
     console.log(e);
+    console.log(e.target);
+    console.log(e.target.value);
     console.log('testing function');
     console.log(this.state);
     var that = this;
@@ -48,10 +51,10 @@ var KingComponent = React.createClass ({
   render: function() {
     console.log('rendering KingComponent');
     return (
-      <form>
+      <form onSubmit={this.getUserLocation}>
       <label for="searchbar">Search: </label>
       <input type="text" id="searchbar" placeholder="Search Beer"></input>
-      <input type="submit" value="Submit" onClick={this.getUserLocation}></input>
+      <input type="submit" placeholder="Submit"></input>
       </form>
     )
   }
