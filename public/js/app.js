@@ -9,6 +9,7 @@ var KingComponent = React.createClass ({
       currentBeer: '',
       currentBrewery: '',
       brewerySearch: [],
+      beerSearch: [],
       display: '',
       searchText: ''
     };
@@ -75,6 +76,14 @@ var KingComponent = React.createClass ({
     console.log('testing searchBeer');
     e.preventDefault();
     console.log(e.target);
+    console.log(this.state.searchText);
+    $.ajax({
+      url: "beers/" + this.state.searchText,
+      type: "GET",
+      success: function(data) {
+        console.log(data["data"]);
+      }
+    })
   },
   render: function() {
     console.log('rendering KingComponent');
@@ -83,7 +92,7 @@ var KingComponent = React.createClass ({
         <button onClick={this.getUserLocation}>Your Location</button>
         <form onSubmit={this.searchBeer}>
         <label>Search Beer: </label>
-          <input type="text" placeholder="Search beers"></input>
+          <input type="text" placeholder="Search beers" onChange={this.handleSearch}></input>
           <input type="submit"></input>
         </form>
       </div>
