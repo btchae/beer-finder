@@ -8,6 +8,7 @@ var KingComponent = React.createClass ({
       longitude: '',
       currentBeerId: '',
       currentBeerName: '',
+      currentBeerData: {},
       currentBrewery: '',
       brewerySearch: [],
       beerSearch: [],
@@ -94,12 +95,14 @@ var KingComponent = React.createClass ({
       }.bind(this)
     })
   },
-  selectingBeer: function(id, name) {
+  selectingBeer: function(id, name, description) {
     console.log("this is id: "+ id)
     console.log("this is class: "+ name)
+    console.log("this is description:"+ description)
     this.setState({
       currentBeerId: id,
-      currentBeerName: name
+      currentBeerName: name,
+      currentBeerData: description
     });
   },
   render: function() {
@@ -115,6 +118,7 @@ var KingComponent = React.createClass ({
           beerSearch={this.state.beerSearch}
           searchText={this.state.searchText}
           selectingBeer={this.selectingBeer}
+          beerData={this.state.beerData}
           />
       )
     } else {
@@ -143,7 +147,8 @@ var BeerSearch = React.createClass ({
     console.log('selecting beer');
     console.log(e.target.id);
     console.log(e.target);
-    this.props.selectingBeer(e.target.id, e.target.className);
+    console.log($(e.target).attr('name'));
+    this.props.selectingBeer(e.target.id, e.target.className, $(e.target).attr('name'));
     this.setState({
       beerShow: true
     })
@@ -160,12 +165,14 @@ var BeerSearch = React.createClass ({
     if (this.state.beerShow === false) {
       var pTags = [];
       for (var i = 0; i < this.props.beerSearch.length; i++) {
+        console.log(this.props.beerSearch[i]["style"]["description"])
         pTags.push(<Ptag
           beerSearch={this.props.beerSearch}
           selectBeer={this.selectBeer}
           id={this.props.beerSearch[i].id}
           onClick={this.selectBeer}
           innerHTML={this.props.beerSearch[i].name}
+          description={this.props.beerSearch[i]["style"]["description"]}
           />)
       }
       return(
@@ -178,6 +185,7 @@ var BeerSearch = React.createClass ({
       return (
         <ShowBeer
           currentBeerId={this.props.currentBeerId}
+          currentBeerName={this.props.currentBeerName}
       />
       )
     }
@@ -186,17 +194,22 @@ var BeerSearch = React.createClass ({
 
 var Ptag = React.createClass ({
   render: function(){
-    console.log(this.props.beerSearch.length);
     return (
-      <p id={this.props.id} className={this.props.innerHTML} onClick={this.props.onClick}>{this.props.innerHTML}</p>
+      <p id={this.props.id} className={this.props.innerHTML}
+      name={this.props.description} onClick={this.props.onClick}>{this.props.innerHTML}</p>
     )
   }
 });
 
 var ShowBeer = React.createClass({
+  showBreweries: function() {
+
+  },
   render: function() {
     return (
-      <p>Beer Name Goes Here</p>
+      <div>
+        <p id={this.props.currentBeerId}>{this.props.currentBeerName}</p>
+      </div>
     )
   }
 });
