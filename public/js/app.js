@@ -329,19 +329,74 @@ var BreweryByBeer = React.createClass ({
 });
 // });
 var BrewerySearch = React.createClass ({
+  getInitialState: function() {
+    return{
+      breweryShow: false
+    }
+  },
   selectBrewery: function(e) {
     e.preventDefault();
+    console.log('click test');
+    this.setState({
+      breweryShow: true
+    });
   },
   render: function() {
+    var breweryResults = [];
+    for (var i = 0; i < this.props.brewerySearch.length; i++) {
+      breweryResults.push(
+        <BreweryListing
+        id={this.props.brewerySearch[i].brewery.id}
+        breweryName={this.props.brewerySearch[i].brewery.name}
+        distance={this.props.brewerySearch[i].distance}
+        handleClick={this.selectBrewery}
+        />);
+    }
+    if (this.state.breweryShow === false) {
+      return(
+        <div>
+          {breweryResults}
+          <button onClick={this.props.fromBeerToHome}>Go Back</button>
+        </div>
+      )
+    } else {
+      return(
+        <p>Test</p>
+      )
+    }
+  }
+});
+// Brewery Listing Needs: Name, Distance, and Id Optional: Region? Locality?
+var BreweryListing = React.createClass ({
+  render: function() {
     return(
-      <div>
-        <p>Testing</p>
-        <button onClick={this.props.fromBeerToHome}>Go Back</button>
-      </div>
+      <p id={this.props.id} onClick={this.props.handleClick}>{this.props.breweryName}</p>
     )
   }
 });
 
+var BreweryShow = React.createClass ({
+  getInitialState: function() {
+    return{
+          displayBeer: false
+    }
+  },
+  render: function() {
+    return(
+      <div>
+      </div>
+      )
+  }
+});
+// var Ptag = React.createClass ({
+//   render: function(){
+//     return (
+//       <p id={this.props.id} className={this.props.innerHTML}
+//       name={this.props.description} title={this.props.style}
+//       onClick={this.props.onClick}>{this.props.innerHTML}</p>
+//     )
+//   }
+// });
 ReactDOM.render(
   <KingComponent />, 
 document.getElementById("container"));
