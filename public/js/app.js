@@ -128,7 +128,7 @@ var KingComponent = React.createClass ({
     } else {
       return (
         <div>
-          <button onClick={this.getUserLocation}>Your Location</button>
+          <button onClick={this.getUserLocation}>Find breweries near you!</button>
           <form onSubmit={this.searchBeer}>
           <label>Search Beer: </label>
             <input type="text" placeholder="Search beers" onChange={this.handleSearch}></input>
@@ -211,18 +211,49 @@ var Ptag = React.createClass ({
 });
 
 var ShowBeer = React.createClass({
+  getInitialState: function() {
+    return{
+      breweryDisplay: false,
+      thisList: []
+    }
+  },
   showBreweries: function() {
+    console.log('testing button');
+    $.ajax({
+      url: "beers/" + this.props.currentBeerId + "/breweries",
+      type: "GET",
+      success: function(data) {
+        console.log(data);
+        this.setState({
 
+        })
+      }
+    })
   },
   render: function() {
     console.log(this.props);
-    return (
-      <div>
-        <h2 id={this.props.currentBeerId}>{this.props.currentBeerName}</h2>
-        <p>Style: {this.props.currentBeerStyle}</p>
-        <p>{this.props.currentBeerData}</p>
-      </div>
-    )
+    if (this.state.breweryDisplay === false) {
+      return (
+        <div>
+          <h2 id={this.props.currentBeerId}>{this.props.currentBeerName}</h2>
+          <p>Style: {this.props.currentBeerStyle}</p>
+          <p>{this.props.currentBeerData}</p>
+          <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"
+          data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank"
+          href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+          <button onClick={this.showBreweries}>Click to find breweries with this beer!</button>
+        </div>
+      )
+    } else if (this.state.breweryDisplay === true) {
+      return (
+        <div>
+          <h2 id={this.props.currentBeerId}>{this.props.currentBeerName}</h2>
+          <p>Style: {this.props.currentBeerStyle}</p>
+          <p>{this.props.currentBeerData}</p>
+          <button onClick={this.showBreweries}>Click to find breweries with this beer!</button>
+        </div>
+      )
+    }
   }
 });
 // });

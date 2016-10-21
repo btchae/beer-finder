@@ -3,8 +3,23 @@ var router = express.Router();
 var request = require('request');
 // console.log('beer'); <---Was used to test pathing of the controller
 //TEST CONTROLLER
-router.get('/', function(req, res) {
-  console.log('testing controller');
+// router.get('/', function(req, res) {
+//   console.log('testing controller');
+// });
+
+router.get('/:beer/breweries', function(req, res) {
+  console.log('testing finding breweries by beer');
+  request('https://api.brewerydb.com/v2/beer/' + req.params.beer + '/breweries?key='
+    + process.env.BEER_KEY + '&format=json', function(error, response, body) {
+      if (!error && response.statusCode == 200) {
+        console.log('searching for breweries with ' + req.params.beer)
+        console.log(typeof body);
+        console.log(body);
+        res.send(body);
+      } else {
+        console.log(response.statusCode);
+      }
+  });
 });
 
 router.get('/:beer', function(req, res) {
