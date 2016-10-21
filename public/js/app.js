@@ -219,7 +219,7 @@ var ShowBeer = React.createClass({
     return (
       <div>
         <h2 id={this.props.currentBeerId}>{this.props.currentBeerName}</h2>
-        <p>{this.props.currentBeerStyle}</p>
+        <p>Style: {this.props.currentBeerStyle}</p>
         <p>{this.props.currentBeerData}</p>
       </div>
     )
