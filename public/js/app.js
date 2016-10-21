@@ -6,7 +6,8 @@ var KingComponent = React.createClass ({
     return {
       latitude: '',
       longitude: '',
-      currentBeer: '',
+      currentBeerId: '',
+      currentBeerName: '',
       currentBrewery: '',
       brewerySearch: [],
       beerSearch: [],
@@ -93,9 +94,12 @@ var KingComponent = React.createClass ({
       }.bind(this)
     })
   },
-  selectingBeer: function(id) {
+  selectingBeer: function(id, name) {
+    console.log("this is id: "+ id)
+    console.log("this is class: "+ name)
     this.setState({
-      currentBeer: id
+      currentBeerId: id,
+      currentBeerName: name
     });
   },
   render: function() {
@@ -106,7 +110,8 @@ var KingComponent = React.createClass ({
           display={this.state.display}
           latitude={this.state.latitude}
           longitude={this.state.longitude}
-          currentBeer={this.state.currentBeer}
+          currentBeerId={this.state.currentBeerId}
+          currentBeerName={this.state.currentBeerName}
           beerSearch={this.state.beerSearch}
           searchText={this.state.searchText}
           selectingBeer={this.selectingBeer}
@@ -137,7 +142,11 @@ var BeerSearch = React.createClass ({
     e.preventDefault();
     console.log('selecting beer');
     console.log(e.target.id);
-    this.props.selectingBeer(e.target.id);
+    console.log(e.target);
+    this.props.selectingBeer(e.target.id, e.target.className);
+    this.setState({
+      beerShow: true
+    })
   },
   render: function() {
     console.log(this.props);
@@ -165,6 +174,12 @@ var BeerSearch = React.createClass ({
           {pTags}
         </div>
       )
+    } else if (this.state.beerShow === true) {
+      return (
+        <ShowBeer
+          currentBeerId={this.props.currentBeerId}
+      />
+      )
     }
   }
 });
@@ -173,26 +188,19 @@ var Ptag = React.createClass ({
   render: function(){
     console.log(this.props.beerSearch.length);
     return (
-      <p id={this.props.id} onClick={this.props.onClick}>{this.props.innerHTML}</p>
+      <p id={this.props.id} className={this.props.innerHTML} onClick={this.props.onClick}>{this.props.innerHTML}</p>
     )
   }
 });
 
-// var Ptag = React.createClass ({
-//   render: function(){
-//     console.log(this.props.beerSearch.length);
-//     for (var i = 0; i < this.props.beerSearch.length; i++) {
-//       console.log(i);
-//       return (
-//         <p id={this.props.beerSearch[i].id} onClick={this.props.selectBeer}>{this.props.beerSearch[i].name}</p>
-//       )
-//     }
-//   }
+var ShowBeer = React.createClass({
+  render: function() {
+    return (
+      <p>Beer Name Goes Here</p>
+    )
+  }
+});
 // });
-
-// var ShowBeer = React.createClass({
-
-// })
 // var BrewerySearch = React.createClass ({
 //   getInitialState: function() {
 //   },
@@ -239,3 +247,15 @@ document.getElementById("container"));
 /////////*Garbage Code
 // console.log('yay');
 // ///var geoFindMe = function() {
+  //This is an older version of the Ptag component
+// var Ptag = React.createClass ({
+//   render: function(){
+//     console.log(this.props.beerSearch.length);
+//     for (var i = 0; i < this.props.beerSearch.length; i++) {
+//       console.log(i);
+//       return (
+//         <p id={this.props.beerSearch[i].id} onClick={this.props.selectBeer}>{this.props.beerSearch[i].name}</p>
+//       )
+//     }
+//   }
+// });
