@@ -84,7 +84,7 @@ var KingComponent = React.createClass ({
       url: "beers/" + this.state.searchText,
       type: "GET",
       success: function(data) {
-        console.log(data["data"]);
+        console.log(data);
         var beerList = [];
         for (var i = 0; i < data["data"].length; i++) {
           beerList.push(data["data"][i]);
@@ -224,10 +224,9 @@ var ShowBeer = React.createClass({
       url: "beers/" + this.props.currentBeerId + "/breweries",
       type: "GET",
       success: function(data) {
-        console.log(data);
-        this.setState({
-
-        })
+        console.log(data["data"]);
+        // this.setState({
+        // })
       }
     })
   },
@@ -241,10 +240,11 @@ var ShowBeer = React.createClass({
           <p>{this.props.currentBeerData}</p>
           <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"
           data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank"
-          href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share this beer!</a></div>
+          href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share this beer on Facebook!</a></div>
           <a className="twitter-share-button"
           href={this.state.message}
           data-size="large">Tweet this beer!</a>
+          <br/>
           <button onClick={this.showBreweries}>Click to find breweries with this beer!</button>
         </div>
       )
@@ -254,7 +254,7 @@ var ShowBeer = React.createClass({
           <h2 id={this.props.currentBeerId}>{this.props.currentBeerName}</h2>
           <p>Style: {this.props.currentBeerStyle}</p>
           <p>{this.props.currentBeerData}</p>
-          <button onClick={this.showBreweries}>Click to find breweries with this beer!</button>
+          <h2>Breweries with {this.props.currentBeerName}</h2>
         </div>
       )
     }

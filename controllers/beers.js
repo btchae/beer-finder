@@ -14,8 +14,8 @@ router.get('/:beer/breweries', function(req, res) {
       if (!error && response.statusCode == 200) {
         console.log('searching for breweries with ' + req.params.beer)
         console.log(typeof body);
-        console.log(body);
-        res.send(body);
+        // console.log(body);
+        res.send(JSON.parse(body));
       } else {
         console.log(response.statusCode);
       }
