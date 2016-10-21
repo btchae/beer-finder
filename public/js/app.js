@@ -214,7 +214,8 @@ var ShowBeer = React.createClass({
   getInitialState: function() {
     return{
       breweryDisplay: false,
-      thisList: []
+      thisList: [],
+      message: "https://twitter.com/intent/tweet?text=I%20like%20" + this.props.currentBeerName
     }
   },
   showBreweries: function() {
@@ -240,7 +241,10 @@ var ShowBeer = React.createClass({
           <p>{this.props.currentBeerData}</p>
           <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"
           data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank"
-          href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+          href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share this beer!</a></div>
+          <a className="twitter-share-button"
+          href={this.state.message}
+          data-size="large">Tweet this beer!</a>
           <button onClick={this.showBreweries}>Click to find breweries with this beer!</button>
         </div>
       )
