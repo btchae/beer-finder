@@ -64,7 +64,8 @@ var KingComponent = React.createClass ({
           breweryList.push(data["data"][i]);
         }
         this.setState({
-          brewerySearch: breweryList
+          brewerySearch: breweryList,
+          display: 'brewery'
         });
       }.bind(this)
     })
@@ -131,6 +132,14 @@ var KingComponent = React.createClass ({
           fromBeerToHome={this.fromBeerToHome}
           />
       )
+    } else if (this.state.display === 'brewery') {
+        return (
+          <BrewerySearch
+            display={this.state.display}
+            latitude={this.state.latitude}
+            longitude={this.state.longitude}
+          />
+        )
     } else {
       return (
         <div>
@@ -317,13 +326,16 @@ var BreweryByBeer = React.createClass ({
   }
 });
 // });
-// var BrewerySearch = React.createClass ({
-//   getInitialState: function() {
-//   },
-//   selectBrewery: function(e) {
-//     e.preventDefault();
-//   }
-// });
+var BrewerySearch = React.createClass ({
+  selectBrewery: function(e) {
+    e.preventDefault();
+  },
+  render: function() {
+    return(
+      <p>Testing</p>
+    )
+  }
+});
 
 ReactDOM.render(
   <KingComponent />, 
