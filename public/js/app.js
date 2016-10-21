@@ -128,6 +128,11 @@ var KingComponent = React.createClass ({
 });
 
 var BeerSearch = React.createClass ({
+  getInitialState: function() {
+    return {
+      beerShow: false
+    };
+  },
   selectBeer: function(e) {
     e.preventDefault();
     console.log('selecting beer');
@@ -136,14 +141,58 @@ var BeerSearch = React.createClass ({
   },
   render: function() {
     console.log(this.props);
-    return(
-      <div>
-        <p id={this.props.beerSearch[0].id} onClick={this.selectBeer}>{this.props.beerSearch[0].name}</p>
-      </div>
+    //Not sure if the below is ok to use.
+    // for (var i = 0; i < this.props.beerSearch.length; i++) {
+    //   $("#container").append("<p id=" +i+">"+this.props.beerSearch[i].name+"</p>");
+    // }
+    // for (var i = 0; i < this.props.beerSearch.length; i++) {
+    //   <Ptag id={this.props.beerSearch[i].id} innerHTML={this.props.beerSearch[i].name}/>
+    // }
+    if (this.state.beerShow === false) {
+      var pTags = [];
+      for (var i = 0; i < this.props.beerSearch.length; i++) {
+        pTags.push(<Ptag
+          beerSearch={this.props.beerSearch}
+          selectBeer={this.selectBeer}
+          id={this.props.beerSearch[i].id}
+          onClick={this.selectBeer}
+          innerHTML={this.props.beerSearch[i].name}
+          />)
+      }
+      return(
+        <div id="beer-container">
+          <h2>Click on a beer!</h2>
+          {pTags}
+        </div>
+      )
+    }
+  }
+});
+
+var Ptag = React.createClass ({
+  render: function(){
+    console.log(this.props.beerSearch.length);
+    return (
+      <p id={this.props.id} onClick={this.props.onClick}>{this.props.innerHTML}</p>
     )
   }
 });
 
+// var Ptag = React.createClass ({
+//   render: function(){
+//     console.log(this.props.beerSearch.length);
+//     for (var i = 0; i < this.props.beerSearch.length; i++) {
+//       console.log(i);
+//       return (
+//         <p id={this.props.beerSearch[i].id} onClick={this.props.selectBeer}>{this.props.beerSearch[i].name}</p>
+//       )
+//     }
+//   }
+// });
+
+// var ShowBeer = React.createClass({
+
+// })
 // var BrewerySearch = React.createClass ({
 //   getInitialState: function() {
 //   },
