@@ -138,6 +138,8 @@ var KingComponent = React.createClass ({
             display={this.state.display}
             latitude={this.state.latitude}
             longitude={this.state.longitude}
+            brewerySearch={this.state.brewerySearch}
+            fromBeerToHome={this.fromBeerToHome}
           />
         )
     } else {
@@ -332,7 +334,10 @@ var BrewerySearch = React.createClass ({
   },
   render: function() {
     return(
-      <p>Testing</p>
+      <div>
+        <p>Testing</p>
+        <button onClick={this.props.fromBeerToHome}>Go Back</button>
+      </div>
     )
   }
 });

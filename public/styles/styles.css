@@ -2,6 +2,6 @@ body {
   background-color: blue;
 }
 
-h2, p, a, h1 {
+label, h2, p, a, h1 {
   color: yellow;
 }
