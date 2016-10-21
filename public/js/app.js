@@ -108,6 +108,11 @@ var KingComponent = React.createClass ({
       currentBeerStyle: style
     });
   },
+  fromBeerToHome: function() {
+    this.setState({
+      display: ""
+    });
+  },
   render: function() {
     console.log('rendering KingComponent');
     if (this.state.display === 'beer') {
@@ -123,6 +128,7 @@ var KingComponent = React.createClass ({
           selectingBeer={this.selectingBeer}
           currentBeerData={this.state.currentBeerData}
           currentBeerStyle={this.state.currentBeerStyle}
+          fromBeerToHome={this.fromBeerToHome}
           />
       )
     } else {
@@ -156,7 +162,12 @@ var BeerSearch = React.createClass ({
     this.props.selectingBeer(e.target.id, e.target.className, $(e.target).attr('name'), $(e.target).attr('title'));
     this.setState({
       beerShow: true
-    })
+    });
+  },
+  unSelectBeer: function() {
+    this.setState({
+      beerShow: false
+    });
   },
   render: function() {
     console.log(this.props);
@@ -185,6 +196,8 @@ var BeerSearch = React.createClass ({
         <div id="beer-container">
           <h2>Click on a beer!</h2>
           {pTags}
+          <br/>
+          <button onClick={this.props.fromBeerToHome}>Go Back</button>
         </div>
       )
     } else if (this.state.beerShow === true) {
@@ -194,6 +207,7 @@ var BeerSearch = React.createClass ({
           currentBeerName={this.props.currentBeerName}
           currentBeerData={this.props.currentBeerData}
           currentBeerStyle={this.props.currentBeerStyle}
+          unSelectBeer={this.unSelectBeer}
       />
       )
     }
@@ -217,6 +231,14 @@ var ShowBeer = React.createClass({
       thisList: [],
       message: "https://twitter.com/intent/tweet?text=I%20like%20" + this.props.currentBeerName
     }
+  },
+  goBackToBeerList: function() {
+    this.props.unSelectBeer();
+  },
+  undisplayBrewery: function() {
+    this.setState({
+      breweryDisplay: false
+    });
   },
   showBreweries: function() {
     console.log('testing button');
@@ -253,6 +275,8 @@ var ShowBeer = React.createClass({
           data-size="large">Tweet this beer!</a>
           <br/>
           <button onClick={this.showBreweries}>Click to find breweries with this beer!</button>
+          <br/>
+          <button onClick={this.goBackToBeerList}>Go Back</button>
         </div>
       )
     } else if (this.state.breweryDisplay === true) {
@@ -272,12 +296,16 @@ var ShowBeer = React.createClass({
           <p>{this.props.currentBeerData}</p>
           <h2>Breweries with {this.props.currentBeerName}</h2>
           {showTheBreweries}
+          <button onClick={this.undisplayBrewery}>Hide Breweries</button>
         </div>
       )
   }
 });
 //BreweyByBeer needs Name, Description and Website
 var BreweryByBeer = React.createClass ({
+  goBack: function() {
+
+  },
   render: function(){
     return (
       <div>
