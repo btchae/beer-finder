@@ -225,13 +225,20 @@ var ShowBeer = React.createClass({
       type: "GET",
       success: function(data) {
         console.log(data["data"]);
-        // this.setState({
-        // })
-      }
+        var thisList = [];
+        for (var i = 0; i < data["data"].length; i++) {
+          thisList.push(data["data"][i]);
+        }
+        this.setState({
+          thisList: thisList,
+          breweryDisplay: true
+        });
+      }.bind(this)
     })
   },
   render: function() {
     console.log(this.props);
+    var showTheBreweries = [];
     if (this.state.breweryDisplay === false) {
       return (
         <div>
@@ -249,15 +256,36 @@ var ShowBeer = React.createClass({
         </div>
       )
     } else if (this.state.breweryDisplay === true) {
+      for (var i = 0; i < this.state.thisList.length; i++) {
+        console.log(i);
+        showTheBreweries.push(<BreweryByBeer
+          breweryName={this.state.thisList[i].name}
+          breweryDescription={this.state.thisList[i].description}
+          website={this.state.thisList[i].website}
+          />)
+        }
+      }
       return (
         <div>
           <h2 id={this.props.currentBeerId}>{this.props.currentBeerName}</h2>
           <p>Style: {this.props.currentBeerStyle}</p>
           <p>{this.props.currentBeerData}</p>
           <h2>Breweries with {this.props.currentBeerName}</h2>
+          {showTheBreweries}
         </div>
       )
-    }
+  }
+});
+//BreweyByBeer needs Name, Description and Website
+var BreweryByBeer = React.createClass ({
+  render: function(){
+    return (
+      <div>
+        <p>{this.props.breweryName}</p>
+        <p>{this.props.breweryDescription}</p>
+        <a href={this.props.website}>{this.props.website}</a>
+      </div>
+    )
   }
 });
 // });
