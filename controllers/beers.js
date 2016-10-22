@@ -7,12 +7,26 @@ var request = require('request');
 //   console.log('testing controller');
 // });
 
+router.get('/:brewery/beers', function(req, res) {
+  console.log('testing finding beer by brewery');
+  console.log(req.params);
+  request('https://api.brewerydb.com/v2/brewery/' + req.params.brewery +
+    '/beers?key=' + process.env.BEER_KEY +'&format=json', function(error, response, body) {
+      if (!error && response.statusCode == 200) {
+        console.log('searching for beers at ' + req.params.brewery);
+        res.send(JSON.parse(body));
+      } else {
+        console.log(response.statusCode);
+      }
+  });
+});
+
 router.get('/:beer/breweries', function(req, res) {
   console.log('testing finding breweries by beer');
   request('https://api.brewerydb.com/v2/beer/' + req.params.beer + '/breweries?key='
     + process.env.BEER_KEY + '&format=json', function(error, response, body) {
       if (!error && response.statusCode == 200) {
-        console.log('searching for breweries with ' + req.params.beer)
+        console.log('searching for breweries with ' + req.params.beer);
         console.log(typeof body);
         // console.log(body);
         res.send(JSON.parse(body));

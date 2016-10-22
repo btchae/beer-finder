@@ -407,12 +407,24 @@ var BreweryShow = React.createClass ({
           thisList: []
     }
   },
+  handleClick: function() {
+    console.log("I'll put beer here maybe");
+    $.ajax({
+      url: "/beers/" + this.props.id + "/beers/",
+      type: "GET",
+      success: function(data) {
+        console.log(data["data"]);
+      }
+    })
+  },
   render: function() {
     return(
       <div>
         <p id={this.props.id}>Name: {this.props.name}</p>
         <p>Distance from you: {this.props.distance} miles</p>
         <a href={this.props.website}>{this.props.website}</a>
+        <br/>
+        <button onClick={this.handleClick}>Check out the beers this brewery has!</button>
       </div>
       )
   }
