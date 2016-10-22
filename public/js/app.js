@@ -1,6 +1,7 @@
 // =========================
 // King Component
 // =========================
+//Everything starts from here. Children: BeerSearch, BrewerySearch
 var KingComponent = React.createClass ({
   getInitialState: function() {
     return {
@@ -173,7 +174,10 @@ var KingComponent = React.createClass ({
   }
   }
 });
-
+// =========================
+// BeerSearch
+// =========================
+///Component for Beer Search Results. Children: ShowBeer, Ptag Parent: KingComponent
 var BeerSearch = React.createClass ({
   getInitialState: function() {
     return {
@@ -241,7 +245,10 @@ var BeerSearch = React.createClass ({
     }
   }
 });
-
+// =========================
+// Ptag
+// =========================
+///Component for Beer search result list items. Children: None Parent: BeerSearch
 var Ptag = React.createClass ({
   render: function(){
     return (
@@ -251,7 +258,10 @@ var Ptag = React.createClass ({
     )
   }
 });
-
+// =========================
+// ShowBeer
+// =========================
+///Component for Beer Show Page(in other words, for more detail on one specific beer). Children: BreweryByBeer Parent: BeerSearch
 var ShowBeer = React.createClass({
   getInitialState: function() {
     return{
@@ -329,6 +339,10 @@ var ShowBeer = React.createClass({
       )
   }
 });
+// =========================
+// BreweryByBeer
+// =========================
+///Component for showing breweries that have the selected Beer. Children: N/A Parent: Show Beer
 //BreweyByBeer needs Name, Description and Website
 var BreweryByBeer = React.createClass ({
   goBack: function() {
@@ -344,7 +358,10 @@ var BreweryByBeer = React.createClass ({
     )
   }
 });
-// });
+// =========================
+// BrewerySearch
+// =========================
+///Component for Brewery Search Results. Children: BreweryListing, BreweryShow Parent: KingComponent
 var BrewerySearch = React.createClass ({
   getInitialState: function() {
     return{
@@ -398,6 +415,10 @@ var BrewerySearch = React.createClass ({
     }
   }
 });
+// =========================
+// BreweryListing
+// =========================
+///Component for individual items within the Brewery Search Results. Children: N/A Parent: BrewerySearch
 // Brewery Listing Needs: Name, Distance, and Id Optional: Region? Locality?
 var BreweryListing = React.createClass ({
   render: function() {
@@ -406,7 +427,10 @@ var BreweryListing = React.createClass ({
     )
   }
 });
-
+// =========================
+// BreweryShow
+// =========================
+///Component for Specific Brewery information. Children: BeerByBrewery Parent: BrewerySearch
 var BreweryShow = React.createClass ({
   getInitialState: function() {
     return{
@@ -475,7 +499,10 @@ var BreweryShow = React.createClass ({
     }
   }
 });
-
+// =========================
+// BeerByBrewery
+// =========================
+///Component for Beer Search Results given a Brewery. Children: N/A Parent: BreweryShow
 var BeerByBrewery = React.createClass ({
   render: function() {
     return(
@@ -486,16 +513,6 @@ var BeerByBrewery = React.createClass ({
     )
   }
 })
-
-// var Ptag = React.createClass ({
-//   render: function(){
-//     return (
-//       <p id={this.props.id} className={this.props.innerHTML}
-//       name={this.props.description} title={this.props.style}
-//       onClick={this.props.onClick}>{this.props.innerHTML}</p>
-//     )
-//   }
-// });
 ReactDOM.render(
   <KingComponent />, 
 document.getElementById("container"));
