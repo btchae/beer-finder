@@ -359,6 +359,12 @@ var BrewerySearch = React.createClass ({
       breweryShow: true
     });
   },
+  unShowBrewery: function() {
+    console.log('testing unShowBrewery');
+    this.setState({
+      breweryShow: false
+    });
+  },
   render: function() {
     var breweryResults = [];
     for (var i = 0; i < this.props.brewerySearch.length; i++) {
@@ -386,6 +392,7 @@ var BrewerySearch = React.createClass ({
         name={this.props.currentBreweryName}
         distance={this.props.currentBreweryDistance}
         website={this.props.currentBreweryWebsite}
+        unShowBrewery={this.unShowBrewery}
         />
       )
     }
@@ -427,22 +434,12 @@ var BreweryShow = React.createClass ({
       }.bind(this)
     })
   },
-        // }
-//         /BreweyByBeer needs Name, Description and Website
-// var BreweryByBeer = React.createClass ({
-//   goBack: function() {
-
-//   },
-//   render: function(){
-//     return (
-//       <div>
-//         <p>{this.props.breweryName}</p>
-//         <p>{this.props.breweryDescription}</p>
-//         <a href={this.props.website}>{this.props.website}</a>
-//       </div>
-//     )
-//   }
-// });
+  hideBeer: function() {
+    console.log('testing hideBeer');
+    this.setState({
+      displayBeer: false
+    });
+  },
   render: function() {
     if (this.state.displayBeer === false) {
       return(
@@ -452,6 +449,8 @@ var BreweryShow = React.createClass ({
           <a href={this.props.website}>{this.props.website}</a>
           <br/>
           <button onClick={this.handleClick}>Check out the beers this brewery has!</button>
+          <br/>
+          <button onClick={this.props.unShowBrewery} >Back to Search Results</button>
         </div>
       )
     } else if (this.state.displayBeer === true) {
@@ -470,6 +469,7 @@ var BreweryShow = React.createClass ({
           <p>Distance from you: {this.props.distance} miles</p>
           <a href={this.props.website}>{this.props.website}</a>
           {listOfBeer}
+          <button onClick={this.hideBeer}>Hide Beer</button>
         </div>
       )
     }
