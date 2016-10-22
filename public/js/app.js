@@ -414,21 +414,79 @@ var BreweryShow = React.createClass ({
       type: "GET",
       success: function(data) {
         console.log(data["data"]);
-      }
+        var myList = [];
+        for (var i = 0; i < data["data"].length; i++) {
+          myList.push(data["data"][i]);
+        }
+        console.log(myList);
+        this.setState({
+          displayBeer: true,
+          thisList: myList
+        });
+        console.log(this.state.thisList);
+      }.bind(this)
     })
   },
+        // }
+//         /BreweyByBeer needs Name, Description and Website
+// var BreweryByBeer = React.createClass ({
+//   goBack: function() {
+
+//   },
+//   render: function(){
+//     return (
+//       <div>
+//         <p>{this.props.breweryName}</p>
+//         <p>{this.props.breweryDescription}</p>
+//         <a href={this.props.website}>{this.props.website}</a>
+//       </div>
+//     )
+//   }
+// });
+  render: function() {
+    if (this.state.displayBeer === false) {
+      return(
+        <div>
+          <p id={this.props.id}>Name: {this.props.name}</p>
+          <p>Distance from you: {this.props.distance} miles</p>
+          <a href={this.props.website}>{this.props.website}</a>
+          <br/>
+          <button onClick={this.handleClick}>Check out the beers this brewery has!</button>
+        </div>
+      )
+    } else if (this.state.displayBeer === true) {
+      console.log('testing display beer');
+      var listOfBeer = [];
+        for (var i = 0; i < this.state.thisList.length; i++) {
+          console.log(this.state.thisList[i]["style"].name);
+          listOfBeer.push(<BeerByBrewery
+            beerName={this.state.thisList[i].name}
+            style={this.state.thisList[i]["style"].name}
+            />)
+        }
+      return(
+        <div>
+          <p id={this.props.id}>Name: {this.props.name}</p>
+          <p>Distance from you: {this.props.distance} miles</p>
+          <a href={this.props.website}>{this.props.website}</a>
+          {listOfBeer}
+        </div>
+      )
+    }
+  }
+});
+
+var BeerByBrewery = React.createClass ({
   render: function() {
     return(
       <div>
-        <p id={this.props.id}>Name: {this.props.name}</p>
-        <p>Distance from you: {this.props.distance} miles</p>
-        <a href={this.props.website}>{this.props.website}</a>
-        <br/>
-        <button onClick={this.handleClick}>Check out the beers this brewery has!</button>
+        <p>Name: {this.props.beerName}</p>
+        <p>Style: {this.props.style}</p>
       </div>
-      )
+    )
   }
-});
+})
+
 // var Ptag = React.createClass ({
 //   render: function(){
 //     return (
