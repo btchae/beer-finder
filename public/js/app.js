@@ -13,6 +13,7 @@ var KingComponent = React.createClass ({
       currentBreweryId: '',
       currentBreweryName: '',
       currentBreweryDistance: '',
+      currentBreweryWebsite: '',
       brewerySearch: [],
       beerSearch: [],
       display: '',
@@ -116,12 +117,13 @@ var KingComponent = React.createClass ({
       display: ""
     });
   },
-  selectingBrewery: function(id, name, distance) {
+  selectingBrewery: function(id, name, distance, website) {
     console.log('testing selectingBrewery');
     this.setState({
       currentBreweryId: id,
       currentBreweryName: name,
-      currentBreweryDistance: distance
+      currentBreweryDistance: distance,
+      currentBreweryWebsite: website
     });
   },
   render: function() {
@@ -153,6 +155,7 @@ var KingComponent = React.createClass ({
             currentBreweryId={this.state.currentBreweryId}
             currentBreweryName={this.state.currentBreweryName}
             currentBreweryDistance={this.state.currentBreweryDistance}
+            currentBreweryWebsite={this.state.currentBreweryWebsite}
             selectingBrewery={this.selectingBrewery}
           />
         )
@@ -351,7 +354,7 @@ var BrewerySearch = React.createClass ({
   selectBrewery: function(e) {
     e.preventDefault();
     console.log('click test');
-    this.props.selectingBrewery(e.target.id, e.target.className, $(e.target).attr('name'));
+    this.props.selectingBrewery(e.target.id, e.target.className, $(e.target).attr('name'), $(e.target).attr('title'));
     this.setState({
       breweryShow: true
     });
@@ -364,6 +367,7 @@ var BrewerySearch = React.createClass ({
         id={this.props.brewerySearch[i].brewery.id}
         breweryName={this.props.brewerySearch[i].brewery.name}
         distance={this.props.brewerySearch[i].distance}
+        website={this.props.brewerySearch[i].brewery.website}
         handleClick={this.selectBrewery}
         />);
     }
@@ -381,6 +385,7 @@ var BrewerySearch = React.createClass ({
         id={this.props.currentBreweryId}
         name={this.props.currentBreweryName}
         distance={this.props.currentBreweryDistance}
+        website={this.props.currentBreweryWebsite}
         />
       )
     }
@@ -390,7 +395,7 @@ var BrewerySearch = React.createClass ({
 var BreweryListing = React.createClass ({
   render: function() {
     return(
-      <p id={this.props.id} className={this.props.breweryName} name={this.props.distance} onClick={this.props.handleClick}>{this.props.breweryName}</p>
+      <p id={this.props.id} className={this.props.breweryName} name={this.props.distance} title={this.props.website} onClick={this.props.handleClick}>{this.props.breweryName}</p>
     )
   }
 });
@@ -405,8 +410,9 @@ var BreweryShow = React.createClass ({
   render: function() {
     return(
       <div>
-      <p id={this.props.id}>Name: {this.props.name}</p>
-      <p>Distance: {this.props.distance}</p>
+        <p id={this.props.id}>Name: {this.props.name}</p>
+        <p>Distance from you: {this.props.distance} miles</p>
+        <a href={this.props.website}>{this.props.website}</a>
       </div>
       )
   }
