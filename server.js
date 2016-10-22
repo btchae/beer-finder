@@ -20,8 +20,6 @@ app.use(methodOverride(function(req, res) {
   }
 }));
 
-//DATABASE
-
 //CONTROLLERS
 var beersController = require('./controllers/beers.js');
 app.use('/beers', beersController)

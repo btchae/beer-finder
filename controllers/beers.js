@@ -6,7 +6,9 @@ var request = require('request');
 // router.get('/', function(req, res) {
 //   console.log('testing controller');
 // });
+//
 
+//Getting the beers that selected brewery has
 router.get('/:brewery/beers', function(req, res) {
   console.log('testing finding beer by brewery');
   console.log(req.params);
@@ -21,6 +23,7 @@ router.get('/:brewery/beers', function(req, res) {
   });
 });
 
+//Getting breweries that carry selected beer
 router.get('/:beer/breweries', function(req, res) {
   console.log('testing finding breweries by beer');
   request('https://api.brewerydb.com/v2/beer/' + req.params.beer + '/breweries?key='
@@ -36,6 +39,7 @@ router.get('/:beer/breweries', function(req, res) {
   });
 });
 
+//Beer Search
 router.get('/:beer', function(req, res) {
   console.log('testing beer search');
   request('http://api.brewerydb.com/v2/search?q='+ req.params.beer + '&type=beer&key=' + 
@@ -52,10 +56,11 @@ router.get('/:beer', function(req, res) {
   });
 });
 
+//Nearest Brewery Search
 router.get('/search/:latitude/:longitude', function(req, res) {
-  console.log('testing search');
-  console.log(req.params);
-  console.log(process.env.BEER_KEY);
+  // console.log('testing search');
+  // console.log(req.params);
+  // console.log(process.env.BEER_KEY);
   request('https://api.brewerydb.com/v2/search/geo/point?lat='+ req.params.latitude +'&lng='+
     req.params.longitude +'&key='+process.env.BEER_KEY+'&format=json', function(error, response, body) {
       if (!error) {

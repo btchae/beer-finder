@@ -26,8 +26,8 @@ var KingComponent = React.createClass ({
     // console.log(e);
     // console.log(e.target);
     // console.log(e.target.value);
-    console.log('testing function');
-    console.log(this.state);
+    // console.log('testing function');
+    // console.log(this.state);
     var that = this;
       if (!navigator.geolocation){
         alert("Geolocation is not supported by your browser");
@@ -38,7 +38,7 @@ var KingComponent = React.createClass ({
         var longitude = position.coords.longitude;
         // console.log(latitude.toString());
         // console.log(longitude.toString());
-        console.log(that);
+        // console.log(that);
         that.setCoordinates(latitude, longitude);
         // that.state.latitude = latitude.toString();
         // that.state.longitude = longitude.toString();
@@ -47,13 +47,13 @@ var KingComponent = React.createClass ({
       function error() {
         alert("Unable to retrieve your location");
       };
-      console.log(this.state.latitude);
-      console.log(this.state.longitude);
+      // console.log(this.state.latitude);
+      // console.log(this.state.longitude);
     // });
     navigator.geolocation.getCurrentPosition(success, error);
   },
   setCoordinates: function(latitude,longitude) {
-    console.log('testing setCoordinates');
+    // console.log('testing setCoordinates');
     this.setState({
       latitude: latitude,
       longitude: longitude
@@ -62,7 +62,7 @@ var KingComponent = React.createClass ({
       url: 'beers/search/'+ this.state.latitude + '/' + this.state.longitude,
       type: "GET",
       success: function(data) {
-        console.log(data["data"]);
+        // console.log(data["data"]);
         var breweryList = [];
         for (var i = 0; i < data["data"].length; i++) {
           breweryList.push(data["data"][i]);
@@ -81,15 +81,15 @@ var KingComponent = React.createClass ({
     });
   },
   searchBeer: function(e) {
-    console.log('testing searchBeer');
+    // console.log('testing searchBeer');
     e.preventDefault();
-    console.log(e.target);
-    console.log(this.state.searchText);
+    // console.log(e.target);
+    // console.log(this.state.searchText);
     $.ajax({
       url: "beers/" + this.state.searchText,
       type: "GET",
       success: function(data) {
-        console.log(data);
+        // console.log(data);
         var beerList = [];
         for (var i = 0; i < data["data"].length; i++) {
           beerList.push(data["data"][i]);
@@ -102,9 +102,9 @@ var KingComponent = React.createClass ({
     })
   },
   selectingBeer: function(id, name, style) {
-    console.log("this is id: "+ id)
-    console.log("this is class: "+ name)
-    console.log("this is style: " + style)
+    // console.log("this is id: "+ id)
+    // console.log("this is class: "+ name)
+    // console.log("this is style: " + style)
     this.setState({
       currentBeerId: id,
       currentBeerName: name,
@@ -117,7 +117,7 @@ var KingComponent = React.createClass ({
     });
   },
   selectingBrewery: function(id, name, distance, website) {
-    console.log('testing selectingBrewery');
+    // console.log('testing selectingBrewery');
     this.setState({
       currentBreweryId: id,
       currentBreweryName: name,
@@ -126,7 +126,7 @@ var KingComponent = React.createClass ({
     });
   },
   render: function() {
-    console.log('rendering KingComponent');
+    // console.log('rendering KingComponent');
     if (this.state.display === 'beer') {
       return (
         <BeerSearch
@@ -191,8 +191,8 @@ var BeerSearch = React.createClass ({
     console.log('selecting beer');
     // console.log(e.target.id);
     // console.log(e.target);
-    console.log($(e.target).attr('name'));
-    console.log($(e.target).attr('title'));
+    // console.log($(e.target).attr('name'));
+    // console.log($(e.target).attr('title'));
     this.props.selectingBeer(e.target.id, e.target.className, $(e.target).attr('title'));
     this.setState({
       beerShow: true
@@ -204,7 +204,7 @@ var BeerSearch = React.createClass ({
     });
   },
   render: function() {
-    console.log(this.props);
+    // console.log(this.props);
     //Not sure if the below is ok to use.
     // for (var i = 0; i < this.props.beerSearch.length; i++) {
     //   $("#container").append("<p id=" +i+">"+this.props.beerSearch[i].name+"</p>");
@@ -215,7 +215,7 @@ var BeerSearch = React.createClass ({
     if (this.state.beerShow === false) {
       var pTags = [];
       for (var i = 0; i < this.props.beerSearch.length; i++) {
-        console.log(this.props.beerSearch);
+        // console.log(this.props.beerSearch);
         pTags.push(<Ptag
           beerSearch={this.props.beerSearch}
           selectBeer={this.selectBeer}
@@ -280,12 +280,12 @@ var ShowBeer = React.createClass({
     });
   },
   showBreweries: function() {
-    console.log('testing button');
+    // console.log('testing button');
     $.ajax({
       url: "beers/" + this.props.currentBeerId + "/breweries",
       type: "GET",
       success: function(data) {
-        console.log(data["data"]);
+        // console.log(data["data"]);
         var thisList = [];
         for (var i = 0; i < data["data"].length; i++) {
           thisList.push(data["data"][i]);
@@ -298,7 +298,7 @@ var ShowBeer = React.createClass({
     })
   },
   render: function() {
-    console.log(this.props);
+    // console.log(this.props);
     var showTheBreweries = [];
     if (this.state.breweryDisplay === false) {
       return (
@@ -319,7 +319,7 @@ var ShowBeer = React.createClass({
       )
     } else if (this.state.breweryDisplay === true) {
       for (var i = 0; i < this.state.thisList.length; i++) {
-        console.log(i);
+        // console.log(i);
         showTheBreweries.push(<BreweryByBeer
           breweryName={this.state.thisList[i].name}
           breweryDescription={this.state.thisList[i].description}
@@ -370,14 +370,14 @@ var BrewerySearch = React.createClass ({
   },
   selectBrewery: function(e) {
     e.preventDefault();
-    console.log('click test');
+    // console.log('click test');
     this.props.selectingBrewery(e.target.id, e.target.className, $(e.target).attr('name'), $(e.target).attr('title'));
     this.setState({
       breweryShow: true
     });
   },
   unShowBrewery: function() {
-    console.log('testing unShowBrewery');
+    // console.log('testing unShowBrewery');
     this.setState({
       breweryShow: false
     });
@@ -439,27 +439,27 @@ var BreweryShow = React.createClass ({
     }
   },
   handleClick: function() {
-    console.log("I'll put beer here maybe");
+    // console.log("I'll put beer here maybe");
     $.ajax({
       url: "/beers/" + this.props.id + "/beers/",
       type: "GET",
       success: function(data) {
-        console.log(data["data"]);
+        // console.log(data["data"]);
         var myList = [];
         for (var i = 0; i < data["data"].length; i++) {
           myList.push(data["data"][i]);
         }
-        console.log(myList);
+        // console.log(myList);
         this.setState({
           displayBeer: true,
           thisList: myList
         });
-        console.log(this.state.thisList);
+        // console.log(this.state.thisList);
       }.bind(this)
     })
   },
   hideBeer: function() {
-    console.log('testing hideBeer');
+    // console.log('testing hideBeer');
     this.setState({
       displayBeer: false
     });
@@ -478,10 +478,10 @@ var BreweryShow = React.createClass ({
         </div>
       )
     } else if (this.state.displayBeer === true) {
-      console.log('testing display beer');
+      // console.log('testing display beer');
       var listOfBeer = [];
         for (var i = 0; i < this.state.thisList.length; i++) {
-          console.log(this.state.thisList[i]["style"].name);
+          // console.log(this.state.thisList[i]["style"].name);
           listOfBeer.push(<BeerByBrewery
             beerName={this.state.thisList[i].name}
             style={this.state.thisList[i]["style"].name}
